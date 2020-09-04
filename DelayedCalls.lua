@@ -1,8 +1,8 @@
-rawset(_G, "DellayedCalls", {
+rawset(_G, "DelayedCalls", {
 	_calls = {}
 })
 
-function DellayedCalls:Update(t, dt)
+function DelayedCalls:Update(t, dt)
 	for k, v in pairs(self._calls) do
 		if self._calls[k] ~=  nil then
 			v.currentTime = v.currentTime + dt
@@ -28,7 +28,7 @@ function DellayedCalls:Update(t, dt)
 	end
 end
 
-function DellayedCalls:Add(id, time, func, loop)
+function DelayedCalls:Add(id, time, func, loop)
 	local queuedFunc = {
 		functionCall = func,
 		timeToWait = time,
@@ -38,7 +38,7 @@ function DellayedCalls:Add(id, time, func, loop)
 	self._calls[id] = queuedFunc
 end
 
-function DellayedCalls:Remove(id)
+function DelayedCalls:Remove(id)
 	if self._calls[id] then
 		self._calls[id] = nil
 	end
@@ -48,6 +48,6 @@ if RequiredScript == "lib/managers/menumanager" then
 	local __orig = MenuManager.update
 	function MenuManager:update(t, dt)
 		__orig(self, t, dt)
-		DellayedCalls:Update(t, dt)
+		DelayedCalls:Update(t, dt)
 	end
 end
